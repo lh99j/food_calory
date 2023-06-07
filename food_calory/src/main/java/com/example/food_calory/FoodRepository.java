@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface FoodDao extends JpaRepository<Food, Long> {
+public interface FoodRepository extends JpaRepository<Food, Long> {
     Optional<Food> findByFoodName(String foodName);
 }
