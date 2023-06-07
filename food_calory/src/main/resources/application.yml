@@ -4,11 +4,14 @@ spring:
     username: root
     password: Flrnl3570@
     url: jdbc:mysql://localhost:3306/jeju
+  jpa:
+      hibernate:
+        ddl-auto: update
+      show-sql: true
+      properties:
+        hibernate:
+          format_sql: true
 
-#  jpa:
-#    hibernate:
-#      ddl-auto: update
-#    show-sql: true
-#    properties:
-#      hibernate:
-#        format_sql: true
+csv:
+  file:
+    path: classpath:static/food.csv
