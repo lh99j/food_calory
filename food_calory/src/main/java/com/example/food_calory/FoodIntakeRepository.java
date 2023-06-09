@@ -6,5 +6,5 @@ import java.time.LocalDate;
 import java.util.List;
 
 public interface FoodIntakeRepository extends JpaRepository<FoodIntake, Long> {
-    List<FoodIntake> findByCreatedDate(LocalDate date);
+    List<FoodIntake> findByDate(String date);
 }

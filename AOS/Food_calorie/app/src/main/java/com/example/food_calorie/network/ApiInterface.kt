@@ -1,6 +1,7 @@
 package com.example.food_calorie.network
 
 import com.example.food_calorie.model.FoodData
+import com.example.food_calorie.network.data.request.AddFoodRequest
 import io.reactivex.Single
 import retrofit2.http.*
 
@@ -18,4 +19,10 @@ interface  ApiInterface {
 
     @GET("/food-intake/list")
     fun getFoodList(@Query("date") date: String): Single<List<FoodData>>
+
+    @GET("/food")
+    fun getFoodCalorie(@Query("foodName") foodName:String): Single<String>
+
+    @POST("/food-intake/create")
+    fun addFoodDate(@Body request: AddFoodRequest):Single<String>
 }
