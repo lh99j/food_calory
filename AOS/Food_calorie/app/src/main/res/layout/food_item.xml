@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/light_grey"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:context=".view.food_item">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/search_result_whole_cl"
+        android:layout_width="0dp"
+        app:layout_constraintWidth_percent="0.862"
+        android:layout_height="0dp"
+        android:elevation="2dp"
+        app:layout_constraintDimensionRatio="1:0.1496"
+        android:layout_marginBottom="13.6dp"
+        android:background="@drawable/main_button_background_drawable"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <TextView
+            android:id="@+id/food_id_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1"
+            android:layout_marginStart="15dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:fontFamily="@font/pretendard_medium"
+            android:textSize="12sp"
+            android:textColor="@color/black"/>
+
+        <View
+            android:id="@+id/food_division"
+            android:layout_width="1dp"
+            android:layout_height="0dp"
+            android:background="@color/division_grey"
+            android:layout_marginStart="20dp"
+            app:layout_constraintHeight_percent="0.45"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/food_id_tv"/>
+
+
+        <TextView
+            android:id="@+id/food_name_tv"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintWidth_percent="0.45"
+            app:layout_constraintHeight_percent="0.26"
+            android:text="미스 디올 블루밍 부케 오드 뚜왈렛"
+            android:fontFamily="@font/pretendard_medium"
+            android:autoSizeMaxTextSize="12dp"
+            android:autoSizeTextType="uniform"
+            android:autoSizeMinTextSize="1dp"
+            android:layout_marginTop="2dp"
+            android:autoSizeStepGranularity="1dp"
+            android:textColor="@color/black"
+            android:layout_marginStart="40dp"
+            android:lineSpacingExtra="10sp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/food_division"/>
+
+        <View
+            android:id="@+id/food_division2"
+            android:layout_width="1dp"
+            android:layout_height="0dp"
+            android:background="@color/division_grey"
+            android:layout_marginEnd="20dp"
+            app:layout_constraintHeight_percent="0.45"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/food_calorie_tv"/>
+
+        <TextView
+            android:id="@+id/food_calorie_tv"
+            android:layout_width="wrap_content"
+            app:layout_constraintWidth_percent="0.1"
+            app:layout_constraintHeight_percent="0.26"
+            android:layout_height="0dp"
+            android:text="1000칼로리"
+            android:autoSizeStepGranularity="1dp"
+            android:autoSizeMinTextSize="1dp"
+            android:autoSizeTextType="uniform"
+            android:autoSizeMaxTextSize="12dp"
+            android:layout_marginEnd="15dp"
+            android:textColor="@color/review_perfume_name"
+            android:fontFamily="@font/pretendard_medium"
+            android:gravity="center_vertical|center_horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
