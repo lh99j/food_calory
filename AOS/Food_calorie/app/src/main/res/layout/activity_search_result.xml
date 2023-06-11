@@ -90,7 +90,7 @@
             android:layout_marginTop="15dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            tools:listitem="@layout/food_item_contain_delete"/>
+            tools:listitem="@layout/food_item"/>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

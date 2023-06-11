@@ -3,15 +3,15 @@ package com.example.food_calorie.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.food_calorie.R
 import com.example.food_calorie.model.Food
 
-class MainFoodRecyclerViewAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class MainFoodDeleteRecyclerViewAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private var foodData: List<Food>? = null
-    private var count = 1
 
     interface OnItemClickListener{
         fun onItemClick(v: View, data: Food, pos: Int)
@@ -26,7 +26,7 @@ class MainFoodRecyclerViewAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return SearchResultViewHolder(
             LayoutInflater.from(parent.context)
-                .inflate(R.layout.food_item, parent, false)
+                .inflate(R.layout.food_item_contain_delete, parent, false)
         )
     }
 
@@ -51,6 +51,7 @@ class MainFoodRecyclerViewAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder
         val id: TextView = itemView.findViewById(R.id.food_id_tv)
         val food: TextView = itemView.findViewById(R.id.food_name_tv)
         val calorie: TextView = itemView.findViewById(R.id.food_calorie_tv)
+        val delete: ImageView = itemView.findViewById(R.id.food_delete_iv)
 
         //        val img : ImageView = itemView.findViewById(R.id.item_event_iv)
         fun bind(foodData: Food) {

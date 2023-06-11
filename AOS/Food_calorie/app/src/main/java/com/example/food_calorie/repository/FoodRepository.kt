@@ -1,6 +1,7 @@
 package com.example.food_calorie.repository
 
 import com.example.food_calorie.model.FoodData
+import com.example.food_calorie.model.GetFoodData
 import com.example.food_calorie.network.ApiClient
 import com.example.food_calorie.network.data.request.AddFoodRequest
 import io.reactivex.Single
@@ -14,6 +15,8 @@ interface FoodRepository {
     fun getFoodList(date: String): Single<List<FoodData>>
     fun getFoodCalorie(foodName:String): Single<String>
     fun addFoodDate(request: AddFoodRequest):Single<String>
+    fun deleteFoodData(date: String, foodName: String): Single<String>
+    fun getFoodListByKeyWord(foodName:String): Single<List<GetFoodData>>
 }
 
 
@@ -32,6 +35,18 @@ class FoodRepositoryImpl: FoodRepository{
 
     override fun addFoodDate(request: AddFoodRequest): Single<String> {
         return ApiClient.api.addFoodDate(request)
+            .subscribeOn(Schedulers.computation())
+            .observeOn(AndroidSchedulers.mainThread()).map { it }
+    }
+
+    override fun deleteFoodData(date: String, foodName: String): Single<String> {
+        return ApiClient.api.deleteFoodData(date, foodName)
+            .subscribeOn(Schedulers.computation())
+            .observeOn(AndroidSchedulers.mainThread()).map { it }
+    }
+
+    override fun getFoodListByKeyWord(foodName: String): Single<List<GetFoodData>> {
+        return ApiClient.api.getFoodListByKeyWord(foodName)
             .subscribeOn(Schedulers.computation())
             .observeOn(AndroidSchedulers.mainThread()).map { it }
     }

@@ -6,9 +6,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.food_calorie.model.FoodData
+import com.example.food_calorie.model.GetFoodData
 import com.example.food_calorie.network.data.request.AddFoodRequest
 import com.example.food_calorie.repository.FoodRepositoryImpl
 import io.reactivex.rxkotlin.subscribeBy
+import kotlin.math.log
 
 class FoodViewModel : ViewModel() {
     private val foodRepository = FoodRepositoryImpl()
@@ -20,6 +22,10 @@ class FoodViewModel : ViewModel() {
     private var _foodCalorie = MutableLiveData<String>()
     val foodCaloire: LiveData<String>
         get() = _foodCalorie
+
+    private var _foodListByKeyWord = MutableLiveData<List<GetFoodData>>()
+    val foodListByKeyWord: LiveData<List<GetFoodData>>
+        get() = _foodListByKeyWord
 
 
     init {
@@ -68,4 +74,27 @@ class FoodViewModel : ViewModel() {
             })
     }
 
+    @SuppressLint("CheckResult")
+    fun deleteFoodData(date: String, foodName: String, callback: (String) -> Unit) {
+        foodRepository.deleteFoodData(date, foodName).subscribeBy (
+            onSuccess = {
+                Log.d("lhj", "deleteFoodData: $it")
+                callback(it) // 작업이 완료되면 콜백 호출
+            },
+            onError = {
+                it.printStackTrace()
+            })
+    }
+
+
+    @SuppressLint("CheckResult")
+    fun getFoodListByKeyWord(foodName: String){
+        foodRepository.getFoodListByKeyWord(foodName).subscribeBy (
+            onSuccess = {
+                _foodListByKeyWord.value = it
+            },
+            onError = {
+                it.printStackTrace()
+            })
+    }
 }
