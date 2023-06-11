@@ -2,6 +2,8 @@ package com.example.food_calory.Service;
 
 import com.example.food_calory.model.Food;
 import com.example.food_calory.Repository.FoodRepository;
+import com.opencsv.CSVReader;
+import com.opencsv.exceptions.CsvException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
@@ -19,7 +21,7 @@ import java.util.Optional;
 public class FoodService {
     private final FoodRepository foodRepository;
 
-    public void saveFoodDataFromCSV() throws IOException {
+    public void saveFoodDataFromCSV() throws IOException, CsvException {
         ClassPathResource resource = new ClassPathResource("static/food.csv");
         File file = resource.getFile();
         List<Food> foodDataList = readFoodDataFromCSV(file);
@@ -31,14 +33,12 @@ public class FoodService {
         return foodRepository.findByFoodName(foodName);
     }
 
-    private List<Food> readFoodDataFromCSV(File file) throws IOException {
+    private List<Food> readFoodDataFromCSV(File file) throws IOException, CsvException {
         List<Food> foodDataList = new ArrayList<>();
 
-        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                String[] data = line.split(",");
-
+        try (CSVReader reader = new CSVReader(new FileReader(file))) {
+            List<String[]> lines = reader.readAll();
+            for (String[] data : lines) {
                 // 음식명과 1인분 칼로리 데이터만 추출하여 FoodData 객체 생성
                 String foodName = data[0];
                 String calorie = data[1];
@@ -46,7 +46,12 @@ public class FoodService {
 
                 foodDataList.add(food);
             }
+        } catch (IOException | CsvException e) {
+            // 예외 처리
+            throw e;
         }
+
+
 
         return foodDataList;
     }
