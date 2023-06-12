@@ -27,14 +27,14 @@ public class FoodIntakeController {
     }
 
     @GetMapping("/list")
-    public ResponseEntity<List<FoodIntake>> getFoodIntakeListByDate(@RequestParam("date") String date) {
-        return ResponseEntity.ok(foodIntakeService.getFoodIntakeListByDate(date));
+    public ResponseEntity<List<FoodIntake>> getFoodIntakeListByDate(@RequestParam("email") String email, @RequestParam("date") String date) {
+        return ResponseEntity.ok(foodIntakeService.getFoodIntakeListByEmailAndDate(email, date));
     }
 
     @DeleteMapping("/delete")
-    public ResponseEntity<String> deleteFoodIntakeByDateAndFoodName(@RequestParam("date") String date, @RequestParam("foodName") String foodName) {
+    public ResponseEntity<String> deleteFoodIntakeByDateAndFoodName(@RequestParam("email") String email, @RequestParam("date") String date, @RequestParam("foodName") String foodName) {
         try {
-            foodIntakeService.deleteDuplicateFoodIntakeByDateAndFoodName(date, foodName);
+            foodIntakeService.deleteDuplicateFoodIntakeByEmailAndDateAndFoodName(email, date, foodName);
             return ResponseEntity.ok("음식 섭취 기록 삭제에 성공했습니다.");
         } catch (Exception e) {
             e.printStackTrace();

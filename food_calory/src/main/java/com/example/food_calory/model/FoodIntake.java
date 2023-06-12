@@ -13,6 +13,7 @@ public class FoodIntake {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String email;
     private String date;
     private String foodName;
     private String calorie;
