@@ -32,7 +32,8 @@ class MainActivity : AppCompatActivity() {
         binding.lifecycleOwner = this
         binding.mainVm = viewModel
 
-        binding.mainFoodRv.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        binding.mainFoodRv.layoutManager =
+            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
 
         val mainRecyclerViewAdapter = MainFoodDeleteRecyclerViewAdapter()
         binding.mainFoodRv.adapter = mainRecyclerViewAdapter
@@ -49,7 +50,7 @@ class MainActivity : AppCompatActivity() {
 
             list.clear()
 
-            for(i in it.indices){
+            for (i in it.indices) {
                 list.add(Food((i + 1), it[i].foodName, it[i].calorie))
             }
 
@@ -60,15 +61,25 @@ class MainActivity : AppCompatActivity() {
 
         binding.mainFoodAddIv.setOnClickListener {
             val intent = Intent(this@MainActivity, SearchResultActivity::class.java)
-            intent.putExtra("calendarDate", calendarDate)
+            if (calendarDate == "") {
+                intent.putExtra("calendarDate", binding.mainCalendarDateTv.text)
+            } else {
+                intent.putExtra("calendarDate", calendarDate)
+            }
             startActivity(intent)
         }
 
         mainRecyclerViewAdapter.setOnItemClickListener(
-            object:MainFoodDeleteRecyclerViewAdapter.OnItemClickListener{
+            object : MainFoodDeleteRecyclerViewAdapter.OnItemClickListener {
                 override fun onItemClick(v: View, data: Food, pos: Int) {
-                    viewModel.deleteFoodData(calendarDate, data.food){
-                        viewModel.getFoodList(calendarDate)
+                    if(calendarDate == ""){
+                        viewModel.deleteFoodData(binding.mainCalendarDateTv.text.toString(), data.food) {
+                            viewModel.getFoodList(binding.mainCalendarDateTv.text.toString())
+                        }
+                    }else{
+                        viewModel.deleteFoodData(calendarDate, data.food) {
+                            viewModel.getFoodList(calendarDate)
+                        }
                     }
 
                 }
@@ -90,11 +101,11 @@ class MainActivity : AppCompatActivity() {
             var m = (month + 1).toString()
             var d = date.toString()
 
-            if(m.length == 1){
+            if (m.length == 1) {
                 m = "0$m"
             }
 
-            if(d.length == 1){
+            if (d.length == 1) {
                 d = "0$d"
             }
 
@@ -115,7 +126,7 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
 
-        if(intent.getStringExtra("foodName") != null){
+        if (intent.getStringExtra("foodName") != null) {
             var foodName = intent.getStringExtra("foodName")
             var date = intent.getStringExtra("date")
             viewModel.getFoodCalorie(foodName!!) { calorie ->
