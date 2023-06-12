@@ -1,5 +1,6 @@
 package com.example.food_calory.Service;
 
+import com.example.food_calory.model.BaseResponse;
 import com.example.food_calory.model.EmailVerification;
 import com.example.food_calory.model.User;
 import com.example.food_calory.Repository.UserRepository;
@@ -64,7 +65,7 @@ public class EmailService {
         return message;
     }
 
-    public String sendEmail(String toEmail) throws MessagingException, UnsupportedEncodingException {
+    public BaseResponse sendEmail(String toEmail) throws MessagingException, UnsupportedEncodingException {
 
         MimeMessage emailForm = createEmailForm(toEmail);
 
@@ -74,7 +75,12 @@ public class EmailService {
         //실제 메일 전송
         emailSender.send(emailForm);
 
-        return authNum;
+        BaseResponse response = new BaseResponse();
+
+        response.setResultCode(0);
+        response.setDesc("인증번호 전송이 완료되었습니다.");
+
+        return response;
     }
 
     public String setContext(String code) {

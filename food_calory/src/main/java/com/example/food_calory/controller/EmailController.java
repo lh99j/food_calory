@@ -1,6 +1,7 @@
 package com.example.food_calory.controller;
 
 import com.example.food_calory.Service.EmailService;
+import com.example.food_calory.model.BaseResponse;
 import com.example.food_calory.model.EmailVerification;
 import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
@@ -17,9 +18,8 @@ public class EmailController {
     private final EmailService emailService;
 
     @PostMapping("/sendCode")
-    public String sendVerificationCode(@RequestParam String email) throws MessagingException, UnsupportedEncodingException {
-        String authCode = emailService.sendEmail(email);
-        return authCode;
+    public ResponseEntity<BaseResponse> sendVerificationCode(@RequestParam String email) throws MessagingException, UnsupportedEncodingException {
+        return ResponseEntity.ok(emailService.sendEmail(email));
     }
 
     @PostMapping("/verify")
@@ -29,7 +29,7 @@ public class EmailController {
         if (isVerified) {
             return ResponseEntity.ok("이메일이 성공적으로 인증되었습니다.");
         } else {
-            return ResponseEntity.badRequest().body("이메일 인증에 실패했습니다.");
+            return ResponseEntity.ok("이메일 인증에 실패했습니다.");
         }
     }
 }

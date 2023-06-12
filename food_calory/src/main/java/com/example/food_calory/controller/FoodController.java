@@ -25,13 +25,13 @@ public class FoodController {
 //    }
 
     @PostMapping("/createAll")
-    public String createAllFromCSV() {
+    public ResponseEntity<String> createAllFromCSV() {
         try {
             foodService.saveFoodDataFromCSV();
-            return "CSV 데이터가 성공적으로 저장되었습니다.";
+            return ResponseEntity.ok("CSV 데이터가 성공적으로 저장되었습니다.");
         } catch (Exception e) {
             e.printStackTrace();
-            return "CSV 데이터 저장 중 오류가 발생했습니다.";
+            return ResponseEntity.ok("CSV 데이터 저장 중 오류가 발생했습니다.");
         }
     }
 
@@ -48,7 +48,7 @@ public class FoodController {
     }
 
     @GetMapping("/foodList")
-    public String getCalorieListByFoodName(@RequestParam String foodName) {
+    public ResponseEntity<String> getCalorieListByFoodName(@RequestParam String foodName) {
         List<Food> foodList = foodDao.findByFoodNameContaining(foodName);
 
         if (!foodList.isEmpty()) {
@@ -61,9 +61,9 @@ public class FoodController {
                 jsonArray.put(jsonObject);
             }
 
-            return jsonArray.toString();
+            return ResponseEntity.ok(jsonArray.toString());
         } else {
-            return "음식 리스트 가져오는 도중 오류가 발생했습니다.";
+            return ResponseEntity.ok("음식 리스트 가져오는 도중 오류가 발생했습니다.");
         }
     }
 
