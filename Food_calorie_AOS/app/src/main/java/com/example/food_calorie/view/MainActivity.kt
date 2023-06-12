@@ -73,12 +73,12 @@ class MainActivity : AppCompatActivity() {
             object : MainFoodDeleteRecyclerViewAdapter.OnItemClickListener {
                 override fun onItemClick(v: View, data: Food, pos: Int) {
                     if(calendarDate == ""){
-                        viewModel.deleteFoodData(binding.mainCalendarDateTv.text.toString(), data.food) {
-                            viewModel.getFoodList(binding.mainCalendarDateTv.text.toString())
+                        viewModel.deleteFoodData("", binding.mainCalendarDateTv.text.toString(), data.food) {
+                            viewModel.getFoodList("", binding.mainCalendarDateTv.text.toString())
                         }
                     }else{
-                        viewModel.deleteFoodData(calendarDate, data.food) {
-                            viewModel.getFoodList(calendarDate)
+                        viewModel.deleteFoodData("", calendarDate, data.food) {
+                            viewModel.getFoodList("", calendarDate)
                         }
                     }
 
@@ -112,7 +112,7 @@ class MainActivity : AppCompatActivity() {
             selectedTime += "$year-$m-$d"
 
             binding.mainCalendarDateTv.text = selectedTime
-            viewModel.getFoodList(selectedTime)
+            viewModel.getFoodList("", selectedTime)
             calendarDate = selectedTime
         }
 
@@ -132,13 +132,14 @@ class MainActivity : AppCompatActivity() {
             viewModel.getFoodCalorie(foodName!!) { calorie ->
                 viewModel.addFoodDate(
                     AddFoodRequest(
+                        "",
                         foodName,
                         date!!,
                         calorie
                     )
                 ) {
                     // addFoodDate의 비동기 작업 완료 후에 실행되는 콜백
-                    viewModel.getFoodList(date)
+                    viewModel.getFoodList("", date)
                 }
             }
 

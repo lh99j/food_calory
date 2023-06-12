@@ -36,7 +36,7 @@ class SearchResultActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         binding.foodToolbar.title = calendarDate
 
-        viewModel.getFoodList(calendarDate)
+        viewModel.getFoodList("", calendarDate)
 
         binding.mainFoodRv.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)

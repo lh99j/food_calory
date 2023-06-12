@@ -12,17 +12,17 @@ import retrofit2.http.Query
 
 
 interface FoodRepository {
-    fun getFoodList(date: String): Single<List<FoodData>>
+    fun getFoodList(email: String, date: String): Single<List<FoodData>>
     fun getFoodCalorie(foodName:String): Single<String>
     fun addFoodDate(request: AddFoodRequest):Single<String>
-    fun deleteFoodData(date: String, foodName: String): Single<String>
+    fun deleteFoodData(email: String, date: String, foodName: String): Single<String>
     fun getFoodListByKeyWord(foodName:String): Single<List<GetFoodData>>
 }
 
 
 class FoodRepositoryImpl: FoodRepository{
-    override fun getFoodList(date: String): Single<List<FoodData>> {
-        return ApiClient.api.getFoodList(date)
+    override fun getFoodList(email: String, date: String): Single<List<FoodData>> {
+        return ApiClient.api.getFoodList(email, date)
             .subscribeOn(Schedulers.computation())
             .observeOn(AndroidSchedulers.mainThread()).map { it }
     }
@@ -39,8 +39,8 @@ class FoodRepositoryImpl: FoodRepository{
             .observeOn(AndroidSchedulers.mainThread()).map { it }
     }
 
-    override fun deleteFoodData(date: String, foodName: String): Single<String> {
-        return ApiClient.api.deleteFoodData(date, foodName)
+    override fun deleteFoodData(email: String, date: String, foodName: String): Single<String> {
+        return ApiClient.api.deleteFoodData(email, date, foodName)
             .subscribeOn(Schedulers.computation())
             .observeOn(AndroidSchedulers.mainThread()).map { it }
     }

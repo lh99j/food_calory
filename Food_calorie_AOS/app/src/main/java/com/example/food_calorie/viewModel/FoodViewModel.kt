@@ -33,9 +33,9 @@ class FoodViewModel : ViewModel() {
     }
 
     @SuppressLint("CheckResult")
-    fun getFoodList(date: String){
+    fun getFoodList(email: String, date: String){
 
-        foodRepository.getFoodList(date).subscribeBy (
+        foodRepository.getFoodList(email, date).subscribeBy (
             onSuccess = {
                 Log.d("countlhj", "4")
                 _foodData.value = it
@@ -75,8 +75,8 @@ class FoodViewModel : ViewModel() {
     }
 
     @SuppressLint("CheckResult")
-    fun deleteFoodData(date: String, foodName: String, callback: (String) -> Unit) {
-        foodRepository.deleteFoodData(date, foodName).subscribeBy (
+    fun deleteFoodData(email: String, date: String, foodName: String, callback: (String) -> Unit) {
+        foodRepository.deleteFoodData(email, date, foodName).subscribeBy (
             onSuccess = {
                 Log.d("lhj", "deleteFoodData: $it")
                 callback(it) // 작업이 완료되면 콜백 호출
