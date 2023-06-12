@@ -89,18 +89,22 @@ public class EmailService {
         return templateEngine.process("mail", context);
     }
 
-    public boolean verifyEmail(EmailVerification verification) {
+    public BaseResponse verifyEmail(EmailVerification verification) {
         String key = "verification:" + verification.getEmail();
         String savedCode = redisTemplate.opsForValue().get(key);
+        BaseResponse response = new BaseResponse();
 
         if (savedCode != null && savedCode.equals(verification.getAuthCode())) {
             saveUser(verification);
             redisTemplate.delete(key);
-
-            return true;
+            response.setResultCode(0);
+            response.setDesc("이메일이 성공적으로 인증되었습니다.");
+        }else{
+            response.setResultCode(-1);
+            response.setDesc("이메일 인증에 실패했습니다.");
         }
 
-        return false;
+        return response;
     }
 
 

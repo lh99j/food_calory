@@ -23,13 +23,7 @@ public class EmailController {
     }
 
     @PostMapping("/verify")
-    public ResponseEntity<String> verifyEmail(@RequestBody EmailVerification verification) {
-        boolean isVerified = emailService.verifyEmail(verification);
-
-        if (isVerified) {
-            return ResponseEntity.ok("이메일이 성공적으로 인증되었습니다.");
-        } else {
-            return ResponseEntity.ok("이메일 인증에 실패했습니다.");
-        }
+    public ResponseEntity<BaseResponse> verifyEmail(@RequestBody EmailVerification verification) {
+        return ResponseEntity.ok(emailService.verifyEmail(verification));
     }
 }
