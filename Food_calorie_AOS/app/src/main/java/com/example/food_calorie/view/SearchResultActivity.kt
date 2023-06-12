@@ -32,11 +32,14 @@ class SearchResultActivity : AppCompatActivity() {
             calendarDate = intent.getStringExtra("calendarDate")!!
         }
 
+        val email = intent.getStringExtra("email")
+        Log.d("loginlhj", "onCreate: $email")
+
         setSupportActionBar(binding.foodToolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         binding.foodToolbar.title = calendarDate
 
-        viewModel.getFoodList("", calendarDate)
+        viewModel.getFoodList(email!!, calendarDate)
 
         binding.mainFoodRv.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
@@ -92,6 +95,7 @@ class SearchResultActivity : AppCompatActivity() {
                     val intent = Intent(this@SearchResultActivity, MainActivity::class.java)
                     intent.putExtra("foodName", data.food)
                     intent.putExtra("date", calendarDate)
+                    intent.putExtra("email", email)
                     startActivity(intent)
                 }
             }

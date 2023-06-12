@@ -24,6 +24,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private val viewModel: FoodViewModel by viewModels()
     private var calendarDate = ""
+    private var email = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         binding = ActivityMainBinding.inflate(layoutInflater)
         super.onCreate(savedInstanceState)
@@ -31,6 +32,9 @@ class MainActivity : AppCompatActivity() {
 
         binding.lifecycleOwner = this
         binding.mainVm = viewModel
+
+        email = intent.getStringExtra("email")!!
+        Log.d("loginlhj", "onCreate: $email")
 
         binding.mainFoodRv.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
@@ -63,8 +67,10 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this@MainActivity, SearchResultActivity::class.java)
             if (calendarDate == "") {
                 intent.putExtra("calendarDate", binding.mainCalendarDateTv.text)
+                intent.putExtra("email", email)
             } else {
                 intent.putExtra("calendarDate", calendarDate)
+                intent.putExtra("email", email)
             }
             startActivity(intent)
         }
@@ -73,12 +79,12 @@ class MainActivity : AppCompatActivity() {
             object : MainFoodDeleteRecyclerViewAdapter.OnItemClickListener {
                 override fun onItemClick(v: View, data: Food, pos: Int) {
                     if(calendarDate == ""){
-                        viewModel.deleteFoodData("", binding.mainCalendarDateTv.text.toString(), data.food) {
-                            viewModel.getFoodList("", binding.mainCalendarDateTv.text.toString())
+                        viewModel.deleteFoodData(email, binding.mainCalendarDateTv.text.toString(), data.food) {
+                            viewModel.getFoodList(email, binding.mainCalendarDateTv.text.toString())
                         }
                     }else{
-                        viewModel.deleteFoodData("", calendarDate, data.food) {
-                            viewModel.getFoodList("", calendarDate)
+                        viewModel.deleteFoodData(email, calendarDate, data.food) {
+                            viewModel.getFoodList(email, calendarDate)
                         }
                     }
 
@@ -112,7 +118,7 @@ class MainActivity : AppCompatActivity() {
             selectedTime += "$year-$m-$d"
 
             binding.mainCalendarDateTv.text = selectedTime
-            viewModel.getFoodList("", selectedTime)
+            viewModel.getFoodList(email, selectedTime)
             calendarDate = selectedTime
         }
 
@@ -125,6 +131,9 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
+        val intentEmail = intent.getStringExtra("email")
+        Log.d("lhjOnResume", "onResume: $email")
+        Log.d("lhjOnResume", "onResume: ${intent.getStringExtra("foodName")}")
 
         if (intent.getStringExtra("foodName") != null) {
             var foodName = intent.getStringExtra("foodName")
@@ -132,14 +141,14 @@ class MainActivity : AppCompatActivity() {
             viewModel.getFoodCalorie(foodName!!) { calorie ->
                 viewModel.addFoodDate(
                     AddFoodRequest(
-                        "",
+                        intentEmail!!,
                         foodName,
                         date!!,
                         calorie
                     )
                 ) {
                     // addFoodDate의 비동기 작업 완료 후에 실행되는 콜백
-                    viewModel.getFoodList("", date)
+                    viewModel.getFoodList(intentEmail, date)
                 }
             }
 

@@ -2,6 +2,6 @@ package com.example.food_calorie.network.c
 
 class C {
     companion object{
-        const val BASE_URL = "http://192.168.200.164:8080"
+        const val BASE_URL = "http://192.168.35.247:8080"
     }
 }

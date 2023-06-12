@@ -39,7 +39,7 @@ class FoodViewModel : ViewModel() {
             onSuccess = {
                 Log.d("countlhj", "4")
                 _foodData.value = it
-                Log.d("lhj", "findAllPerfume: $it")
+                Log.d("lhj", "getFoodList: $it")
             },
             onError = {
                 it.printStackTrace()
@@ -66,7 +66,7 @@ class FoodViewModel : ViewModel() {
         foodRepository.addFoodDate(request).subscribeBy (
             onSuccess = {
                 Log.d("countlhj", "3")
-                Log.d("lhj", "findAllPerfume: $it")
+                Log.d("lhj", "addFoodDate: $it")
                 callback() // 작업이 완료되면 콜백 호출
             },
             onError = {
