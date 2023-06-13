@@ -10,4 +10,5 @@
     <string name="login_btn">로그인 하기</string>
     <string name="login_kakao_btn">카카오 로그인</string>
     <string name="login_seach_slash">/</string>
+    <string name="if_healthy">건강하게 먹었다면?</string>
 </resources>

@@ -4,16 +4,21 @@ plugins {
 }
 apply plugin: 'kotlin-kapt'
 
+Properties properties = new Properties()
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
+
 android {
     namespace 'com.example.food_calorie'
     compileSdk 33
 
     defaultConfig {
         applicationId "com.example.food_calorie"
-        minSdk 24
+        minSdk 26
         targetSdk 33
         versionCode 1
         versionName "1.0"
+
+        buildConfigField "String", "CHATGPT_API_KEY", properties['gpt.api.key']
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }

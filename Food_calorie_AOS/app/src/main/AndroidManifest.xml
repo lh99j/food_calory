@@ -20,6 +20,13 @@
         android:theme="@style/Theme.Food_calorie"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".view.GptActivity"
+            android:exported="true">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".view.SingUpActivity"
             android:exported="true">
             <meta-data

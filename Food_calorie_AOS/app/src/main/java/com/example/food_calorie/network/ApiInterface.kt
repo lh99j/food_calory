@@ -3,8 +3,10 @@ package com.example.food_calorie.network
 import com.example.food_calorie.model.FoodData
 import com.example.food_calorie.model.GetFoodData
 import com.example.food_calorie.network.data.request.AddFoodRequest
+import com.example.food_calorie.network.data.request.GptRequest
 import com.example.food_calorie.network.data.request.LoginRequest
 import com.example.food_calorie.network.data.request.SignUpRequest
+import com.example.food_calorie.network.data.response.GptResponse
 import com.example.food_calorie.network.data.response.LoginResponse
 import com.example.food_calorie.network.data.response.Response
 import io.reactivex.Single
@@ -45,4 +47,7 @@ interface  ApiInterface {
 
     @POST("/signUp/email/verify")
     fun signUp(@Body request: SignUpRequest): Single<Response>
+
+    @POST("chat/completions")
+    fun getChatAnswer(@Body request: GptRequest): Single<GptResponse>
 }

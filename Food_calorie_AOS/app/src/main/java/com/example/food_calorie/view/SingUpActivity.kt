@@ -36,13 +36,13 @@ class SingUpActivity : AppCompatActivity() {
 
         viewModel.signUpResult.observe(this, Observer {
             if(it.resultCode == 0){
-                Toast.makeText(this, it.desc, Toast.LENGTH_SHORT)
+                Toast.makeText(this, it.desc, Toast.LENGTH_SHORT).show()
 
                 val intent = Intent(this@SingUpActivity, LoginActivity::class.java)
                 startActivity(intent)
 
             }else{
-                Toast.makeText(this, it.desc, Toast.LENGTH_SHORT)
+                Toast.makeText(this, it.desc, Toast.LENGTH_SHORT).show()
             }
         })
     }

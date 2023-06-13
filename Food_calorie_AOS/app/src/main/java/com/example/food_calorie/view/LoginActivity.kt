@@ -3,6 +3,7 @@ package com.example.food_calorie.view
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import com.example.food_calorie.R
@@ -32,6 +33,8 @@ class LoginActivity : AppCompatActivity() {
                 val intent = Intent(this@LoginActivity, MainActivity::class.java)
                 intent.putExtra("email", binding.loginEmailEt.text.toString())
                 startActivity(intent)
+            }else{
+                Toast.makeText(this, "이메일 또는 비밀번호가 올바르지 않습니다.", Toast.LENGTH_SHORT).show()
             }
         })
 

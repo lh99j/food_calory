@@ -1,22 +1,24 @@
-package com.example.food_calorie.network
+package com.example.food_calorie.network.chatGPT
 
-import com.example.food_calorie.network.c.C
+import com.example.food_calorie.network.ApiInterface
 import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.converter.scalars.ScalarsConverterFactory
+import java.util.concurrent.TimeUnit
 
-object ApiClient {
+object GptApiClient {
     private val client = OkHttpClient.Builder().apply {
-        addInterceptor(ApiInterceptor())
+        addInterceptor(GptApiInterceptor())
+        connectTimeout(1000, TimeUnit.SECONDS)
+        readTimeout(1000, TimeUnit.SECONDS)
+        writeTimeout(1000, TimeUnit.SECONDS)
     }.build()
     var gson = GsonBuilder().setLenient().create()
     private val retrofit by lazy {
-        Retrofit.Builder().baseUrl(C.BASE_URL)
+        Retrofit.Builder().baseUrl("https://api.openai.com/v1/")
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-            .addConverterFactory(ScalarsConverterFactory.create())
             .addConverterFactory(GsonConverterFactory.create(gson))
             .client(client)
             .build()
@@ -25,10 +27,4 @@ object ApiClient {
     val api: ApiInterface by lazy {
         retrofit.create(ApiInterface::class.java)
     }
-}
-
-interface ServerResult {
-    fun isSuccess(): Boolean
-    fun code(): String
-    fun errorMessage(): String?
 }

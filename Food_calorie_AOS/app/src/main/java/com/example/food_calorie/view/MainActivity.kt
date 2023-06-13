@@ -18,6 +18,7 @@ import com.example.food_calorie.databinding.ActivityMainBinding
 import com.example.food_calorie.model.Food
 import com.example.food_calorie.network.data.request.AddFoodRequest
 import com.example.food_calorie.viewModel.FoodViewModel
+import java.time.LocalDate
 import java.util.Calendar
 
 class MainActivity : AppCompatActivity() {
@@ -25,6 +26,8 @@ class MainActivity : AppCompatActivity() {
     private val viewModel: FoodViewModel by viewModels()
     private var calendarDate = ""
     private var email = ""
+    private var totalCalorie = 0.0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         binding = ActivityMainBinding.inflate(layoutInflater)
         super.onCreate(savedInstanceState)
@@ -32,6 +35,12 @@ class MainActivity : AppCompatActivity() {
 
         binding.lifecycleOwner = this
         binding.mainVm = viewModel
+
+        setSupportActionBar(binding.foodToolbar)
+        binding.foodToolbar.title = "Calorie"
+
+        val currentDate: LocalDate = LocalDate.now()
+        binding.mainCalendarDateTv.text = currentDate.toString()
 
         email = intent.getStringExtra("email")!!
         Log.d("loginlhj", "onCreate: $email")
@@ -53,13 +62,17 @@ class MainActivity : AppCompatActivity() {
             Log.d("lhj", "onCreate: ${it}")
 
             list.clear()
+            totalCalorie = 0.0
 
             for (i in it.indices) {
+                totalCalorie += it[i].calorie.toDouble()
                 list.add(Food((i + 1), it[i].foodName, it[i].calorie))
             }
 
             mainRecyclerViewAdapter.submitSearchResultEventList(list)
         })
+
+        viewModel.getFoodList(email, currentDate.toString())
 
         mainRecyclerViewAdapter.submitSearchResultEventList(list)
 
@@ -91,6 +104,13 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         )
+
+        binding.mainFoodGptBtn.setOnClickListener {
+            val intent = Intent(this@MainActivity, GptActivity::class.java)
+            intent.putExtra("email", email)
+            intent.putExtra("totalCalorie", totalCalorie.toString())
+            startActivity(intent)
+        }
 
     }
 
