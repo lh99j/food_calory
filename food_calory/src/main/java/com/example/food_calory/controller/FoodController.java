@@ -16,13 +16,8 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @RequestMapping("/food")
 public class FoodController {
-    private final FoodRepository foodDao;
+    private final FoodRepository foodRepository;
     private final FoodService foodService;
-
-//    @GetMapping("/{foodName}")
-//    public Food getFoodData(@PathVariable String foodName) {
-//        return foodService.getFoodData(foodName);
-//    }
 
     @PostMapping("/createAll")
     public ResponseEntity<String> createAllFromCSV() {
@@ -37,7 +32,7 @@ public class FoodController {
 
     @GetMapping()
     public ResponseEntity<String> getCalorieByFoodName(@RequestParam String foodName) {
-        Optional<Food> foodOptional = foodDao.findByFoodName(foodName);
+        Optional<Food> foodOptional = foodRepository.findByFoodName(foodName);
 
         if (foodOptional.isPresent()) {
             Food food = foodOptional.get();
@@ -47,9 +42,10 @@ public class FoodController {
         }
     }
 
+    //키워드를 통해 foodList 가져오기
     @GetMapping("/foodList")
     public ResponseEntity<String> getCalorieListByFoodName(@RequestParam String foodName) {
-        List<Food> foodList = foodDao.findByFoodNameContaining(foodName);
+        List<Food> foodList = foodRepository.findByFoodNameContaining(foodName);
 
         if (!foodList.isEmpty()) {
             JSONArray jsonArray = new JSONArray();

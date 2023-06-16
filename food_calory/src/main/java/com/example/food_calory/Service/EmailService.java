@@ -57,6 +57,7 @@ public class EmailService {
         MimeMessage emailForm = createEmailForm(toEmail);
 
         String key = "verification:" + toEmail;
+        //10분동안 redis에 key와 authNum을 저장
         redisTemplate.opsForValue().set(key, authNum, Duration.ofMinutes(10));
 
         //실제 메일 전송

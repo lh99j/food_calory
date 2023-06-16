@@ -29,10 +29,6 @@ public class FoodService {
         foodRepository.saveAll(foodDataList);
     }
 
-    public Optional<Food> getFoodData(String foodName) {
-        return foodRepository.findByFoodName(foodName);
-    }
-
     private List<Food> readFoodDataFromCSV(File file) throws IOException, CsvException {
         List<Food> foodDataList = new ArrayList<>();
 
