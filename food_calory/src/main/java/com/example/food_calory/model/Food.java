@@ -12,13 +12,5 @@ public class Food {
     private Long id;
     private String foodName;
     private String calorie;
-
-    public Food() {
-    }
-
-    public Food(String foodName, String calorie) {
-        this.foodName = foodName;
-        this.calorie = calorie;
-    }
 }
 

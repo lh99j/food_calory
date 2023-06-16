@@ -28,32 +28,19 @@ public class EmailService {
     private final UserRepository userRepository;
 
     public void createCode() {
+        StringBuilder sb = new StringBuilder(6);
         Random random = new Random();
-        StringBuffer key = new StringBuffer();
 
-        for(int i=0;i<8;i++) {
-            int index = random.nextInt(3);
-
-            switch (index) {
-                case 0 :
-                    key.append((char) ((int)random.nextInt(26) + 97));
-                    break;
-                case 1:
-                    key.append((char) ((int)random.nextInt(26) + 65));
-                    break;
-                case 2:
-                    key.append(random.nextInt(9));
-                    break;
-            }
+        for (int i = 0; i < 6; i++) {
+            sb.append(random.nextInt(10));
         }
-        authNum = key.toString();
+        authNum = sb.toString();
     }
 
     public MimeMessage createEmailForm(String email) throws MessagingException, UnsupportedEncodingException {
 
         createCode(); //인증 코드 생성
         String setFrom = "grand2181@gmail.com";
-        String toEmail = email;
         String title = "회원가입 인증 번호";
 
         MimeMessage message = emailSender.createMimeMessage();
@@ -109,7 +96,10 @@ public class EmailService {
 
 
     private void saveUser(EmailVerification verification) {
-        userRepository.save(new User(verification.getEmail(), verification.getPassword()));
+        User user = new User();
+        user.setEmail(verification.getEmail());
+        user.setPassword(verification.getPassword());
+        userRepository.save(user);
     }
 
 }

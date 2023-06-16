@@ -42,7 +42,9 @@ public class FoodService {
                 // 음식명과 1인분 칼로리 데이터만 추출하여 FoodData 객체 생성
                 String foodName = data[0];
                 String calorie = data[1];
-                Food food = new Food(foodName, calorie);
+                Food food = new Food();
+                food.setFoodName(foodName);
+                food.setCalorie(calorie);
 
                 foodDataList.add(food);
             }
